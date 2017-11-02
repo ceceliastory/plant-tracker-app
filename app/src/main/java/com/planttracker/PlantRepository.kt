@@ -1,17 +1,11 @@
 package com.planttracker
 
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class PlantRepository(val plantService: PlantService) {
+class PlantRepository @Inject constructor(private val plantApiClient: PlantApiClient) {
 
-    fun getAllPlants() : Observable<List<Model.Plant>> {
-        return plantService.getPlants()
-    }
-}
-
-object PlantRepositoryProvider {
-
-    fun provide(): PlantRepository {
-        return PlantRepository(PlantService.create())
+    fun getAllPlants() : Observable<List<Plant>> {
+        return plantApiClient.getPlants()
     }
 }
