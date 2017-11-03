@@ -1,17 +1,17 @@
 package com.planttracker
 
-import android.content.Context
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.plan_list_detail_view.view.*
+import kotlinx.android.synthetic.main.plant_list_view.view.*
 import javax.inject.Inject
 
 class PlantListFragment : Fragment() {
@@ -19,18 +19,21 @@ class PlantListFragment : Fragment() {
     @Inject lateinit var plantViewModel: PlantViewModel
     private val subscriptions = CompositeDisposable()
     private lateinit var plantAdapter: PlantListAdapter
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.appComponent.inject(this)
-        plantAdapter = PlantListAdapter(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.plant_list_view, container, false)
 
-        val listView = view.findViewById<ListView>(R.id.list_plants) as ListView
-        listView.adapter = plantAdapter
+        linearLayoutManager = LinearLayoutManager(context)
+        view.plants.layoutManager = linearLayoutManager
+
+        plantAdapter = PlantListAdapter()
+        view.plants.adapter = plantAdapter
 
         return view
     }
@@ -48,44 +51,52 @@ class PlantListFragment : Fragment() {
 
     private fun displayPlants() {
         subscriptions.add(
-                plantViewModel.getAllPlants()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { result ->
-                                    run {
-                                        plantAdapter.plants = result
-                                        plantAdapter.notifyDataSetChanged()
-                                    }
-                                }
-                        ))
+                plantViewModel.getAllPlants().subscribe(
+                        { result ->
+                            run {
+                                plantAdapter.plants = result
+                                plantAdapter.notifyItemInserted(result.size)
+                            }
+                        }
+                ))
     }
 
-    class PlantListAdapter(context: Context) : BaseAdapter() {
-
+    class PlantListAdapter : RecyclerView.Adapter<PlantListAdapter.PlantHolder>() {
         var plants: List<Plant> = emptyList()
-        private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rowView = layoutInflater.inflate(R.layout.plan_list_detail_view, parent, false)
-            val plant: Plant = getItem(position) as Plant
-            val titleTextView = rowView.findViewById<TextView>(R.id.plant_name) as TextView
-
-            titleTextView.text = plant.name
-
-            return rowView
-        }
-
-        override fun getItem(p0: Int): Any {
-            return plants[p0]
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-        override fun getCount(): Int {
+        override fun getItemCount(): Int {
             return plants.size
         }
+
+        override fun onBindViewHolder(holder: PlantListAdapter.PlantHolder, position: Int) {
+            val plant = plants[position]
+            holder.bindPlant(plant)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantListAdapter.PlantHolder {
+            val inflatedView = parent.inflate(R.layout.plan_list_detail_view, false)
+            return PlantHolder(inflatedView)
+        }
+
+        class PlantHolder(private var view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+            private var plant: Plant? = null
+
+            init {
+                view.setOnClickListener(this)
+            }
+
+            fun bindPlant(plant: Plant) {
+                this.plant = plant
+                view.plant_name.text = plant.name
+            }
+
+            override fun onClick(v: View) {
+                Log.d("RecyclerView", "CLICK!")
+            }
+        }
     }
+}
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
