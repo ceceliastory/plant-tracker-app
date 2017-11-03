@@ -5,7 +5,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule(val app: App) {
+class AppModule(private val app: App) {
     @Provides
     @Singleton
     fun provideApp() = app

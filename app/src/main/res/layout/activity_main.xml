@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.planttracker.SinglePaneContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.planttracker.PlantListActivity">
-
-
-    <FrameLayout
-        android:id="@+id/frag_container"
+    android:id="@+id/container"
+    >
+    <com.planttracker.plants.PlantListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-</android.support.constraint.ConstraintLayout>
+</com.planttracker.SinglePaneContainer>

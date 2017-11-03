@@ -1,51 +1,41 @@
-package com.planttracker
+package com.planttracker.plants
 
-import android.os.Bundle
+import android.content.Context
 import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.planttracker.App
+import com.planttracker.R
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.plan_list_detail_view.view.*
-import kotlinx.android.synthetic.main.plant_list_view.view.*
 import javax.inject.Inject
 
-class PlantListFragment : Fragment() {
+class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView(context, attributeSet) {
 
     @Inject lateinit var plantViewModel: PlantViewModel
     private val subscriptions = CompositeDisposable()
     private lateinit var plantAdapter: PlantListAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onFinishInflate() {
+        super.onFinishInflate()
         App.appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.plant_list_view, container, false)
 
         linearLayoutManager = LinearLayoutManager(context)
-        view.plants.layoutManager = linearLayoutManager
+        layoutManager = linearLayoutManager
 
         plantAdapter = PlantListAdapter()
-        view.plants.adapter = plantAdapter
-
-        return view
-    }
-
-    override fun onStart() {
-        super.onStart()
+        adapter = plantAdapter
 
         displayPlants()
     }
 
-    override fun onStop() {
-        super.onStop()
+    fun onStop() {
         subscriptions.clear()
     }
 
@@ -68,12 +58,12 @@ class PlantListFragment : Fragment() {
             return plants.size
         }
 
-        override fun onBindViewHolder(holder: PlantListAdapter.PlantHolder, position: Int) {
+        override fun onBindViewHolder(holder: PlantHolder, position: Int) {
             val plant = plants[position]
             holder.bindPlant(plant)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantListAdapter.PlantHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantHolder {
             val inflatedView = parent.inflate(R.layout.plan_list_detail_view, false)
             return PlantHolder(inflatedView)
         }

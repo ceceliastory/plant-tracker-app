@@ -1,4 +1,4 @@
-package com.planttracker
+package com.planttracker.plants
 
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.planttracker
+package com.planttracker.plants
 
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,5 +11,9 @@ class PlantViewModel @Inject constructor(private val plantRepository: PlantRepos
         return plantRepository.getAllPlants()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun addPlant(name: String) {
+        plantRepository.addPlant(Plant(name))
     }
 }
