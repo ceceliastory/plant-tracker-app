@@ -19,7 +19,7 @@ class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView
 
     @Inject lateinit var plantViewModel: PlantViewModel
     private val subscriptions = CompositeDisposable()
-    private lateinit var plantAdapter: PlantListAdapter
+    private lateinit var listAdapter: PlantListAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onFinishInflate() {
@@ -29,8 +29,8 @@ class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView
         linearLayoutManager = LinearLayoutManager(context)
         layoutManager = linearLayoutManager
 
-        plantAdapter = PlantListAdapter()
-        adapter = plantAdapter
+        listAdapter = PlantListAdapter()
+        adapter = listAdapter
 
         displayPlants()
     }
@@ -44,8 +44,8 @@ class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView
                 plantViewModel.getAllPlants().subscribe(
                         { result ->
                             run {
-                                plantAdapter.plants = result
-                                plantAdapter.notifyItemInserted(result.size)
+                                listAdapter.plants = result
+                                listAdapter.notifyItemInserted(result.size)
                             }
                         }
                 ))

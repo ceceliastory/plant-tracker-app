@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PlantTracker</string>
+    <string name="add_plant_message">Plant Name</string>
+    <string name="add_plant_button">Add a new plant</string>
 </resources>

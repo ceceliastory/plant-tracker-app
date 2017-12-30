@@ -1,6 +1,8 @@
 package com.planttracker.plants
 
 import io.reactivex.Observable
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,7 +16,7 @@ interface PlantApiClient {
     fun getPlants(): Observable<List<Plant>>
 
     @POST("plant")
-    fun addPlant(@Body plant: Plant)
+    fun addPlant(@Body plant: Plant): Call<Void>
 
     companion object {
         fun create (): PlantApiClient {
