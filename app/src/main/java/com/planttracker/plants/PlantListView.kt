@@ -15,15 +15,15 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.plan_list_detail_view.view.*
 import javax.inject.Inject
 
-class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView(context, attributeSet) {
+class PlantListView : RecyclerView {
 
     @Inject lateinit var plantViewModel: PlantViewModel
-    private val subscriptions = CompositeDisposable()
-    private lateinit var listAdapter: PlantListAdapter
-    private lateinit var linearLayoutManager: LinearLayoutManager
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
+    private val subscriptions: CompositeDisposable
+    private var listAdapter: PlantListAdapter
+    private var linearLayoutManager: LinearLayoutManager
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         App.appComponent.inject(this)
 
         linearLayoutManager = LinearLayoutManager(context)
@@ -32,10 +32,14 @@ class PlantListView(context: Context, attributeSet: AttributeSet) : RecyclerView
         listAdapter = PlantListAdapter()
         adapter = listAdapter
 
+        this.subscriptions = CompositeDisposable()
+
         displayPlants()
     }
 
-    fun onStop() {
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
         subscriptions.clear()
     }
 
