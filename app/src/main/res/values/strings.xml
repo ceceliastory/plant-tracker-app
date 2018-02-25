@@ -2,4 +2,6 @@
     <string name="app_name">PlantTracker</string>
     <string name="add_plant_message">Plant Name</string>
     <string name="add_plant_button">Add a new plant</string>
+    <string name="watering_interval_message">Watering Interval in Days</string>
+    <string name="last_watered_date">Last watered (yyyy-mm-dd)</string>
 </resources>

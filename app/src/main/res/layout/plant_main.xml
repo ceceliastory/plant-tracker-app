@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.planttracker.plants.PlantListView
+    <com.planttracker.plants.view.PlantListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

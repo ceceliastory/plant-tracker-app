@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.planttracker.plants.AddPlantView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.planttracker.plants.add.AddPlantView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/plant_name_input"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/add_plant_message" />
 
+    <EditText
+        android:id="@+id/plant_watering_interval"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/watering_interval_message" />
+
+    <EditText
+        android:id="@+id/plant_last_watered_date"
+        android:inputType="date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/last_watered_date" />
+
     <Button
         android:id="@+id/add_new_plant_submit_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_plant_button" />
 
-</com.planttracker.plants.AddPlantView>
+</com.planttracker.plants.add.AddPlantView>

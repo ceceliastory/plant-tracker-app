@@ -13,7 +13,7 @@ class PlantViewModel @Inject constructor(private val plantRepository: PlantRepos
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun addPlant(name: String) {
-        plantRepository.addPlant(Plant(name))
+    fun addPlant(name: String, lastWatered: String, wateringIntervalInDays: Int) {
+        plantRepository.addPlant(Plant(name, lastWatered, wateringIntervalInDays))
     }
 }

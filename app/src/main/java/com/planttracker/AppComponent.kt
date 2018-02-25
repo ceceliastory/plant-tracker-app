@@ -1,6 +1,8 @@
 package com.planttracker
 
+import com.planttracker.plants.add.AddPlantView
 import com.planttracker.plants.*
+import com.planttracker.plants.view.PlantListView
 import dagger.Component
 import javax.inject.Singleton
 

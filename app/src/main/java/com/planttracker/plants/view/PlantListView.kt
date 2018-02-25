@@ -1,4 +1,4 @@
-package com.planttracker.plants
+package com.planttracker.plants.view
 
 import android.content.Context
 import android.support.annotation.LayoutRes
@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.planttracker.App
 import com.planttracker.R
+import com.planttracker.plants.Plant
+import com.planttracker.plants.PlantViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.plan_list_detail_view.view.*
 import javax.inject.Inject

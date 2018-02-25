@@ -1,12 +1,12 @@
-package com.planttracker.plants
+package com.planttracker.plants.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
 import android.widget.FrameLayout
 import com.planttracker.R
+import com.planttracker.plants.add.AddPlantActivity
 
 class PlantListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

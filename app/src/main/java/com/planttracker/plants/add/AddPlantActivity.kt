@@ -1,12 +1,11 @@
-package com.planttracker.plants
+package com.planttracker.plants.add
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
 import android.widget.FrameLayout
 import com.planttracker.R
 import android.content.Intent
-import android.util.Log
+import com.planttracker.plants.view.PlantListActivity
 
 
 class AddPlantActivity : AppCompatActivity() {
